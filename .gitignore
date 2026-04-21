@@ -1,0 +1,7 @@
+.conda/
+__pycache__/
+*.pyc
+data/
+models/
+.venv/
+*.egg-info/
