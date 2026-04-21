@@ -126,8 +126,10 @@ def evaluate():
     rank_acc = (real_order == pred_order).mean()
 
     # Within-factor accuracy: is prediction within 2x of real?
-    within_2x = (np.abs(log_pred - log_real) < np.log(2)).mean()
+    within_1_1x = (np.abs(log_pred - log_real) < np.log(1.1)).mean()
+    within_1_2x = (np.abs(log_pred - log_real) < np.log(1.2)).mean()
     within_1_5x = (np.abs(log_pred - log_real) < np.log(1.5)).mean()
+    within_2x = (np.abs(log_pred - log_real) < np.log(2)).mean()
 
     print(f"\n{'='*55}")
     print(f"  Surrogate Model Evaluation ({N_TEST} fresh samples)")
@@ -138,6 +140,8 @@ def evaluate():
     print(f"  Pearson r:            {pearson_r:>14.4f}  (p={pearson_p:.2e})")
     print(f"  Spearman ρ:           {spearman_r:>14.4f}  (p={spearman_p:.2e})")
     print(f"  Ranking Accuracy:     {rank_acc:>13.1%}  (random pairs)")
+    print(f"  Within 1.1x:          {within_1_1x:>13.1%}")
+    print(f"  Within 1.2x:          {within_1_2x:>13.1%}")
     print(f"  Within 1.5x:          {within_1_5x:>13.1%}")
     print(f"  Within 2x:            {within_2x:>13.1%}")
     print(f"{'='*55}")

@@ -25,10 +25,6 @@ from config import (
 from utils import set_seed, compute_pdp_per_layer
 
 
-# Number of layers is read from dataset at runtime; PDP features = num_layers - 1
-# We'll determine input_dim dynamically
-
-
 # ---------------------------------------------------------------------------
 # Dataset
 # ---------------------------------------------------------------------------
@@ -170,9 +166,6 @@ def build_features(X: np.ndarray, h: np.ndarray):
             if pdp_features[i, l] > 1e-8:
                 log_attenuation[i, l] = np.log(1.0 - pdp_features[i, l])
 
-    # Cumulative sum of log attenuation (progressive degradation)
-    cum_log_att = np.cumsum(log_attenuation, axis=1)
-
     # Summary features
     n_transitions = (pdp_features[:, :-1] > 1e-8).sum(axis=1, keepdims=True).astype(np.float32)
     total_log_att = log_attenuation.sum(axis=1, keepdims=True)
@@ -283,7 +276,7 @@ def train_surrogate():
     target_std = norm_params["target_std"]
 
     # Early stopping on de-normalized log(PPL) MAE
-    early_stopper = EarlyStopping(target_mae=0.5)
+    early_stopper = EarlyStopping(target_mae=TARGET_VAL_MAE)
     early_stopper.start()
 
     best_val_mae = float("inf")

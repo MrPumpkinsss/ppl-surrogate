@@ -14,11 +14,11 @@ NUM_UAVS = 5
 # Phase 1 – Data collection
 # ---------------------------------------------------------------------------
 SEQ_LENGTH = 512          # Fixed token length per sample
-NUM_SAMPLES = 5000        # Number of (X, h, PPL) samples to collect
+NUM_SAMPLES = 20000       # Number of (X, h, PPL) samples to collect
 GAMMA_0 = 1.0             # Reference SNR parameter for PDP computation
 SNR_SCALE = 10.0          # Scale factor: SNR = channel_gain * SNR_SCALE
 NUM_CHUNKS = 50           # Number of pre-extracted WikiText-2 token chunks
-K_AVERAGING = 5           # Forward passes per (X, h) to average out dropout noise
+K_AVERAGING = 10          # Forward passes per (X, h) to average out dropout noise
 DATA_DIR = "data"
 DATA_SAVE_PATH = f"{DATA_DIR}/dataset.npz"
 
@@ -33,7 +33,7 @@ LEARNING_RATE = 1e-3
 BATCH_SIZE = 128
 MAX_EPOCHS = 2000          # Upper bound; early stopping will terminate sooner
 MAX_TRAINING_MINUTES = 30
-TARGET_VAL_MAE = 0.5
+TARGET_VAL_MAE = 0.05
 PATIENCE = 50
 LR_SCHEDULER_PATIENCE = 15
 LR_FACTOR = 0.5
